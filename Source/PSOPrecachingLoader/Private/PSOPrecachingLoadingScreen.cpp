@@ -3,6 +3,7 @@
 
 #include "PSOPrecachingLoadingScreen.h"
 
+#include "MoviePlayer.h"
 #include "SlateOptMacros.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/Text/STextBlock.h"
@@ -142,5 +143,11 @@ void SPSOPrecachingLoadingScreen::Tick(const FGeometry& AllottedGeometry, const 
                 LoadingDescriptionTextBlock->SetText(INVTEXT("Optimization complete! Loading game..."));
             }
         }
+    }
+
+    if (FShaderPipelineCache::NumPrecompilesRemaining() <= 0)
+    {
+        // Signal loading is complete if you're using PlaybackType::WaitForManualStop
+        GetMoviePlayer()->StopMovie();
     }
 }

@@ -24,23 +24,33 @@ void FPSOPrecachingLoaderModule::ShutdownModule()
 
 void FPSOPrecachingLoaderModule::RegisterPSOPrecachingLoadingScreen()
 {
-	if (FSlateRenderer::IsInitialized())
+	if (FSlateApplication::IsInitialized())
 	{
 		FLoadingScreenAttributes LoadingScreen;
 		LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
-		LoadingScreen.WidgetType = EWindowType::Normal;
-		LoadingScreen.CreatedWidget = SNew(SPSOPrecachingLoadingScreen);
+		LoadingScreen.MinimumLoadingScreenDisplayTime = 1.0f;
+        
+		// Create the widget directly - no IsLoadingMovie property
+		LoadingScreen.WidgetLoadingScreen = SNew(SPSOPrecachingLoadingScreen);
 
 		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+
+		IConsoleVariable* PSOStartupMode = IConsoleManager::Get().FindConsoleVariable(TEXT("r.ShaderPipelineCache.StartupMode"));
+		if (PSOStartupMode)
+		{
+			PSOStartupMode->Set(1); // Set Fast mode for PSO compilation
+		}
 	}
+
+
 }
 
 void FPSOPrecachingLoaderModule::UnregisterPSOPrecachingLoadingScreen()
 {
-	// Clear any existing loading screen if necessary
-	if (GetMoviePlayer())
+	// GetMoviePlayer has a Shutdown method
+	if (GetMoviePlayer()->IsMovieCurrentlyPlaying())
 	{
-		GetMoviePlayer()->ClearLoadingScreenAttributes();
+		GetMoviePlayer()->Shutdown();
 	}
 }
 
