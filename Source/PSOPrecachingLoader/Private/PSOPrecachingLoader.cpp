@@ -1,0 +1,49 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#include "PSOPrecachingLoader.h"
+
+#include "LoadingScreenSettings.h"
+#include "MoviePlayer.h"
+#include "PSOPrecachingLoadingScreen.h"
+
+#define LOCTEXT_NAMESPACE "FPSOPrecachingLoaderModule"
+
+void FPSOPrecachingLoaderModule::StartupModule()
+{
+	// Register loading screen
+	if (IsRunningGame())
+	{
+		RegisterPSOPrecachingLoadingScreen();
+	}
+}
+
+void FPSOPrecachingLoaderModule::ShutdownModule()
+{
+	UnregisterPSOPrecachingLoadingScreen();
+}
+
+void FPSOPrecachingLoaderModule::RegisterPSOPrecachingLoadingScreen()
+{
+	if (FSlateRenderer::IsInitialized())
+	{
+		FLoadingScreenAttributes LoadingScreen;
+		LoadingScreen.bAutoCompleteWhenLoadingCompletes = true;
+		LoadingScreen.WidgetType = EWindowType::Normal;
+		LoadingScreen.CreatedWidget = SNew(SPSOPrecachingLoadingScreen);
+
+		GetMoviePlayer()->SetupLoadingScreen(LoadingScreen);
+	}
+}
+
+void FPSOPrecachingLoaderModule::UnregisterPSOPrecachingLoadingScreen()
+{
+	// Clear any existing loading screen if necessary
+	if (GetMoviePlayer())
+	{
+		GetMoviePlayer()->ClearLoadingScreenAttributes();
+	}
+}
+
+#undef LOCTEXT_NAMESPACE
+	
+IMPLEMENT_MODULE(FPSOPrecachingLoaderModule, PSOPrecachingLoader)
