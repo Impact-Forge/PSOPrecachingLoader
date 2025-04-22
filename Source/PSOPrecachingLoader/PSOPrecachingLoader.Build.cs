@@ -26,6 +26,8 @@ public class PSOPrecachingLoader : ModuleRules
 			new string[]
 			{
 				"Core",
+				"RHI",
+				"RenderCore",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -40,6 +42,7 @@ public class PSOPrecachingLoader : ModuleRules
 				"SlateCore", 
 				"MoviePlayer", 
 				"AsyncLoadingScreen",
+				"UMG", 
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
