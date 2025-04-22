@@ -2,7 +2,6 @@
 
 #include "PSOPrecachingLoader.h"
 
-#include "LoadingScreenSettings.h"
 #include "MoviePlayer.h"
 #include "PSOPrecachingLoadingScreen.h"
 
@@ -10,6 +9,7 @@
 
 void FPSOPrecachingLoaderModule::StartupModule()
 {
+   
 	// Register loading screen
 	if (IsRunningGame())
 	{

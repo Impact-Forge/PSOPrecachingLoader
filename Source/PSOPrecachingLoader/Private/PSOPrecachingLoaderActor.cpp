@@ -72,8 +72,10 @@ void APSOPrecachingLoaderActor::OnPSOPrecachingComplete()
 
 void APSOPrecachingLoaderActor::LoadNextLevel()
 {
-	if (!NextLevelToLoad.IsNone())
+	if (!NextLevelToLoad.IsNull())
 	{
-		UGameplayStatics::OpenLevel(GetWorld(), NextLevelToLoad);
+		FString LevelPath = NextLevelToLoad.ToString();
+		FName LevelName = FName(*FPackageName::GetShortName(LevelPath));
+		UGameplayStatics::OpenLevel(GetWorld(), LevelName);
 	}
 }

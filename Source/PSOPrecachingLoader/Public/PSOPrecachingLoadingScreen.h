@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/Widget.h"
 #include "Widgets/SCompoundWidget.h"
 #include "Styling/SlateTypes.h"
+#include "PSOPrecachingLoadingScreen.generated.h"
 
 /**
  * 
@@ -34,4 +36,24 @@ private:
 
 	// Update method
 	void UpdatePSOProgress();
+};
+
+
+UCLASS()
+class PSOPRECACHINGLOADER_API UPSOPrecachingSlateWidget : public UWidget
+{
+	GENERATED_BODY()
+
+public:
+	UPSOPrecachingSlateWidget(const FObjectInitializer& ObjectInitializer);
+
+protected:
+	// UWidget interface
+	virtual TSharedRef<SWidget> RebuildWidget() override;
+	virtual void SynchronizeProperties() override;
+	virtual void ReleaseSlateResources(bool bReleaseChildren) override;
+	// End of UWidget interface
+
+private:
+	TSharedPtr<SPSOPrecachingLoadingScreen> MySlateWidget;
 };

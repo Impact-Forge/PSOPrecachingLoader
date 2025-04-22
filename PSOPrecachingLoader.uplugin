@@ -5,7 +5,7 @@
 	"FriendlyName": "PSOPrecachingLoader",
 	"Description": "A plugin to help manage PSO precaching with a custom loading screen",
 	"Category": "Rendering",
-	"CreatedBy": "wupy at Impact Forge LLC",
+	"CreatedBy": "Wupy at Impact Forge LLC",
 	"CreatedByURL": "",
 	"DocsURL": "",
 	"MarketplaceURL": "",
@@ -24,8 +24,12 @@
 	"Plugins": [
 		{
 			"Name": "AsyncLoadingScreen",
-			"Enabled": "true"
+			"Enabled": true
+		},
+		{
+			"Name": "MainMenu",
+			"Enabled": true,
+			"Optional": true
 		}
 	]
-	
 }

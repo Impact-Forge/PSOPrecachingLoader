@@ -151,3 +151,28 @@ void SPSOPrecachingLoadingScreen::Tick(const FGeometry& AllottedGeometry, const 
         GetMoviePlayer()->StopMovie();
     }
 }
+
+UPSOPrecachingSlateWidget::UPSOPrecachingSlateWidget(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+{
+}
+
+TSharedRef<SWidget> UPSOPrecachingSlateWidget::RebuildWidget()
+{
+    MySlateWidget = SNew(SPSOPrecachingLoadingScreen);
+    return MySlateWidget.ToSharedRef();
+}
+
+void UPSOPrecachingSlateWidget::SynchronizeProperties()
+{
+    Super::SynchronizeProperties();
+    // Synchronize any properties you expose to Blueprint here
+}
+
+void UPSOPrecachingSlateWidget::ReleaseSlateResources(bool bReleaseChildren)
+{
+    Super::ReleaseSlateResources(bReleaseChildren);
+    
+    // This is the critical part - properly release the Slate widget
+    MySlateWidget.Reset();
+}

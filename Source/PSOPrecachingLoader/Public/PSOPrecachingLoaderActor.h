@@ -18,9 +18,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PSO Precaching")
 	TSubclassOf<UUserWidget> LoadingWidgetClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PSO Precaching")
-	FName NextLevelToLoad;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "PSO Precaching", meta = (AllowedClasses = "World"))
+	FSoftObjectPath NextLevelToLoad;
 
+	// Add a helper function to get the level name
+	UFUNCTION(BlueprintCallable, Category = "PSO Precaching")
+	FName GetLevelNameFromPath() const
+	{
+		return FName(*FPackageName::GetShortName(NextLevelToLoad.ToString()));
+	}
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "PSO Precaching")
 	UUserWidget* LoadingWidget;
 
